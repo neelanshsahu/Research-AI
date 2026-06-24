@@ -1,0 +1,285 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Theme: Deep Obsidian + Ember ─────────────────────────────────
+   Background:  Near-black warm charcoal  (#09090e)
+   Surface:     Layered dark glass
+   Primary:     Amber/gold (#f59e0b) — warm, editorial, NOT generic
+   Secondary:   Indigo (#6366f1) — deep, professional
+   Accent:      Emerald (#10b981) — used only for success/facts
+   Text:        Warm white (#f8f7f4)
+   Display font: Space Grotesk — distinctive, modern
+   Body font:    Inter — clean, legible
+─────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #09090e;
+    color: #f0ede8;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    /* Subtle ambient glow — warm amber top-left, indigo bottom-right */
+    background-image:
+      radial-gradient(ellipse at 15% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 100%, rgba(99, 102, 241, 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 50%, rgba(16, 185, 129, 0.02) 0%, transparent 70%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  code, pre, .mono {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+}
+
+@layer components {
+
+  /* ── Glass card — warmer, less generic ── */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.055);
+    border-color: rgba(245, 158, 11, 0.2);
+    box-shadow: 0 8px 32px rgba(245, 158, 11, 0.06);
+  }
+
+  /* ── Gradient text — amber → indigo, editorial feel ── */
+  .gradient-text {
+    background: linear-gradient(135deg, #fbbf24 0%, #a78bfa 50%, #fbbf24 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+  }
+
+  /* ── Search input ── */
+  .search-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 14px 20px;
+    color: #f0ede8;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: all 0.25s ease;
+  }
+  .search-input::placeholder {
+    color: rgba(240, 237, 232, 0.3);
+  }
+  .search-input:focus {
+    border-color: rgba(245, 158, 11, 0.45);
+    background: rgba(245, 158, 11, 0.04);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.08), 0 4px 20px rgba(245, 158, 11, 0.06);
+  }
+
+  /* ── Primary button — amber, warm ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #d97706 100%);
+    background-size: 200% auto;
+    color: #09090e;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: -0.01em;
+  }
+  .btn-primary:hover {
+    background-position: right center;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+  }
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* ── Secondary button ── */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(240, 237, 232, 0.7);
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+  }
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.10);
+    border-color: rgba(255, 255, 255, 0.20);
+    color: #f0ede8;
+  }
+
+  /* ── Status badges ── */
+  .badge-idle {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+    background: rgba(255,255,255,0.06);
+    color: rgba(240,237,232,0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .badge-running {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+    background: rgba(245,158,11,0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(245,158,11,0.3);
+  }
+
+  .badge-done {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+    background: rgba(16,185,129,0.12);
+    color: #34d399;
+    border: 1px solid rgba(16,185,129,0.3);
+  }
+
+  .badge-error {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+    background: rgba(239,68,68,0.12);
+    color: #f87171;
+    border: 1px solid rgba(239,68,68,0.3);
+  }
+
+  /* ── Tabs — refined ── */
+  .tab-item {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(240,237,232,0.45);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+  }
+  .tab-item:hover {
+    color: rgba(240,237,232,0.8);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .tab-item-active {
+    background: linear-gradient(135deg, rgba(245,158,11,0.18), rgba(99,102,241,0.18));
+    color: #fbbf24;
+    border: 1px solid rgba(245,158,11,0.25);
+  }
+
+  /* ── Scrollbar ── */
+  .custom-scroll::-webkit-scrollbar { width: 3px; }
+  .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background: rgba(245,158,11,0.2);
+    border-radius: 99px;
+  }
+  .custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(245,158,11,0.35);
+  }
+}
+
+@layer utilities {
+  .bg-white\/8  { background-color: rgba(255,255,255,0.08); }
+  .bg-white\/12 { background-color: rgba(255,255,255,0.12); }
+
+  /* ── Shimmer animation (gradient text + progress bar) ── */
+  @keyframes shimmer {
+    0%   { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  /* ── Fade in ── */
+  .animate-fade-in {
+    animation: fadeIn 0.35s ease-out both;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Slide up (modals) ── */
+  .animate-slide-up {
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ── Pulse slow (status dot) ── */
+  .animate-pulse-slow {
+    animation: pulseSlow 2.5s cubic-bezier(0.4,0,0.6,1) infinite;
+  }
+  @keyframes pulseSlow {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.45; }
+  }
+
+  /* ── Agent ring pulse — amber ── */
+  .ring-pulse {
+    animation: ringPulse 1.5s cubic-bezier(0.4,0,0.6,1) infinite;
+  }
+  @keyframes ringPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.45); }
+    50%       { box-shadow: 0 0 0 8px rgba(245,158,11,0); }
+  }
+
+  /* ── Connector flow — amber → indigo ── */
+  .connector-active {
+    background: linear-gradient(90deg, #f59e0b, #6366f1);
+    animation: flow 1.5s linear infinite;
+  }
+  @keyframes flow {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  /* ── Progress bar shimmer ── */
+  .progress-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(245,158,11,0.2) 0%,
+      rgba(245,158,11,0.6) 50%,
+      rgba(99,102,241,0.4) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s linear infinite;
+  }
+}
