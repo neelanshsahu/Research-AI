@@ -66,9 +66,8 @@ async def call_llm(prompt: str, use_tools: bool = False) -> dict:
     Executes a generic LLM prompt and expects a JSON dict returned.
     Try each model in MODEL_CHAIN until one succeeds.
     """
-    from dotenv import dotenv_values
-    env_dict = dotenv_values(".env")
-    api_key = env_dict.get("GEMINI_API_KEY", "")
+    import os
+    api_key = os.environ.get("GEMINI_API_KEY", "")
 
     if not api_key or api_key in ("demo", "your_gemini_api_key_here", ""):
         raise ValueError("No API key configured — add your Gemini key in Settings.")

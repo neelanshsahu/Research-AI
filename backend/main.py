@@ -1,5 +1,7 @@
 """FastAPI main application — AI Multi-Agent Research Assistant"""
 import os
+from dotenv import load_dotenv
+load_dotenv()
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette.sse import EventSourceResponse
@@ -21,11 +23,7 @@ _runtime_settings: dict = {}
 # CORS — allow the Vite dev server
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:3000",
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -148,9 +146,7 @@ async def test_settings(request: SettingsRequest):
         from google import genai
         from google.genai import types
 
-        from dotenv import dotenv_values
-        env_dict = dotenv_values(".env")
-        api_key = env_dict.get("GEMINI_API_KEY", "")
+        api_key = os.environ.get("GEMINI_API_KEY", "")
         model   = request.model or get_setting("model", "GEMINI_MODEL", "gemini-2.5-flash")
 
         if not api_key:
