@@ -94,6 +94,8 @@ function ModelGrid({ models, selected, onChange, activeColor }) {
 }
 
 /* ─── SettingsModal ──────────────────────────────────────────────── */
+const API_BASE_URL = import.meta.env.PROD ? "https://research-ai-uow9.onrender.com" : "";
+
 export default function SettingsModal({ isOpen, onClose }) {
   const [provider, setProvider]       = useState('gemini')
   // Gemini
@@ -146,17 +148,19 @@ export default function SettingsModal({ isOpen, onClose }) {
     localStorage.setItem('openai_api_key', openaiKey)
     localStorage.setItem('openai_model', openaiModel)
 
+    const payload = {
+      provider,
+      api_key:        geminiKey,
+      model:          geminiModel,
+      openai_api_key: openaiKey,
+      openai_model:   openaiModel,
+    }
+
     try {
-      await fetch('/api/settings', {
+      await fetch(`${API_BASE_URL}/api/settings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          provider,
-          api_key:        geminiKey,
-          model:          geminiModel,
-          openai_api_key: openaiKey,
-          openai_model:   openaiModel,
-        }),
+        body: JSON.stringify(payload),
       })
     } catch (_) {}
 
@@ -175,17 +179,20 @@ export default function SettingsModal({ isOpen, onClose }) {
     }
     setTesting(true)
     setTestResult(null)
+
+    const payload = {
+      provider,
+      api_key:        geminiKey,
+      model:          geminiModel,
+      openai_api_key: openaiKey,
+      openai_model:   openaiModel,
+    }
+
     try {
-      const res = await fetch('/api/settings/test', {
+      const res = await fetch(`${API_BASE_URL}/api/settings/test`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          provider,
-          api_key:        geminiKey,
-          model:          geminiModel,
-          openai_api_key: openaiKey,
-          openai_model:   openaiModel,
-        }),
+        body: JSON.stringify(payload),
       })
       const data = await res.json()
       if (data.success) {

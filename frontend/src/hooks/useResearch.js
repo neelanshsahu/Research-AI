@@ -7,6 +7,8 @@
  */
 import { useState, useRef, useCallback } from 'react'
 
+const API_BASE_URL = import.meta.env.PROD ? "https://research-ai-uow9.onrender.com" : "";
+
 const INITIAL_AGENTS = {
   coordinator: { status: 'idle', message: '', output: null },
   research:    { status: 'idle', message: '', output: null },
@@ -49,7 +51,7 @@ export function useResearch() {
 
     try {
       // 1. Create task via REST
-      const res = await fetch('/api/research/start', {
+      const res = await fetch(`${API_BASE_URL}/api/research/start`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic: searchTopic }),
@@ -77,7 +79,7 @@ export function useResearch() {
       completedRef.current = false
 
       // 2. Open SSE stream
-      const es = new EventSource(`/api/research/stream/${task_id}`)
+      const es = new EventSource(`${API_BASE_URL}/api/research/stream/${task_id}`)
       eventSourceRef.current = es
 
       es.addEventListener('start', () => {

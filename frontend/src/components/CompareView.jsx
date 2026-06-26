@@ -60,7 +60,7 @@ function AIDifferencesPanel({ leftReport, rightReport, leftTopic, rightTopic }) 
     setLoading(true)
     setError('')
     try {
-      const res = await fetch('/api/research/compare', {
+      const res = await fetch(`${API_BASE_URL}/api/research/compare`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
