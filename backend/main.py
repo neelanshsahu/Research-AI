@@ -90,16 +90,18 @@ async def update_settings(request: SettingsRequest):
         os.environ["PROVIDER"] = request.provider
 
     if request.api_key is not None:
-        _runtime_settings["api_key"] = request.api_key
-        os.environ["GEMINI_API_KEY"] = request.api_key
+        clean_key = request.api_key.strip()
+        _runtime_settings["api_key"] = clean_key
+        os.environ["GEMINI_API_KEY"] = clean_key
 
     if request.model is not None:
         _runtime_settings["model"] = request.model
         os.environ["GEMINI_MODEL"] = request.model
 
     if request.openai_api_key is not None:
-        _runtime_settings["openai_api_key"] = request.openai_api_key
-        os.environ["OPENAI_API_KEY"] = request.openai_api_key
+        clean_key = request.openai_api_key.strip()
+        _runtime_settings["openai_api_key"] = clean_key
+        os.environ["OPENAI_API_KEY"] = clean_key
 
     if request.openai_model is not None:
         _runtime_settings["openai_model"] = request.openai_model

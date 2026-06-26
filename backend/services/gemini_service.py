@@ -67,7 +67,7 @@ async def call_llm(prompt: str, use_tools: bool = False) -> dict:
     Try each model in MODEL_CHAIN until one succeeds.
     """
     import os
-    api_key = os.environ.get("GEMINI_API_KEY", "")
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
 
     if not api_key or api_key in ("demo", "your_gemini_api_key_here", ""):
         raise ValueError("No API key configured — add your Gemini key in Settings.")
