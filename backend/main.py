@@ -145,7 +145,7 @@ async def test_settings(request: SettingsRequest):
         from google import genai
         from google.genai import types
 
-        api_key = os.environ.get("GEMINI_API_KEY", "")
+        api_key = request.api_key or get_setting("api_key", "GEMINI_API_KEY")
         model   = request.model or get_setting("model", "GEMINI_MODEL", "gemini-2.5-flash")
 
         if not api_key:
@@ -158,7 +158,8 @@ async def test_settings(request: SettingsRequest):
                 contents="Reply with exactly one word: OK",
                 config=types.GenerateContentConfig(max_output_tokens=10),
             )
-            return {"success": True, "model": model, "response": response.text.strip()}
+            text_val = response.text if response and response.text else "OK"
+            return {"success": True, "model": model, "response": text_val.strip()}
         except Exception as e:
             err = str(e)
             if "429" in err or "RESOURCE_EXHAUSTED" in err:
