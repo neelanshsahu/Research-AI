@@ -64,6 +64,3 @@ App runs at → **http://localhost:5173**
 | `GEMINI_API_KEY`| Your Gemini API key    |
 
 Get your API key at [Google AI Studio](https://aistudio.google.com/app/apikey).
-# Bootcamp_assignment_1
-# Bootcamp_assignment_1
-# Bootcamp_Assignment_1
