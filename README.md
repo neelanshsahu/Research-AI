@@ -1,5 +1,7 @@
 # 🧠 ResearchAI — AI Multi-Agent Research Assistant
 
+**Live Demo:** [https://researchai-mc88.onrender.com](https://researchai-mc88.onrender.com)
+
 A full-stack SaaS application that orchestrates a **4-agent AI research pipeline** powered by Google Gemini 2.0 Flash.
 
 ## Tech Stack
