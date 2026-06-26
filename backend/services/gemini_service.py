@@ -88,8 +88,8 @@ async def call_llm(prompt: str, use_tools: bool = False) -> dict:
             except Exception as e:
                 err_str = str(e)
                 if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "503" in err_str or "UNAVAILABLE" in err_str:
-                    print(f"[GeminiService] {model} hit rate limit/503. Sleeping 10s...")
-                    await asyncio.sleep(10)
+                    print(f"[GeminiService] {model} hit rate limit/503. Sleeping 20s...")
+                    await asyncio.sleep(20)
                     retries += 1
                     continue
                 elif "NOT_FOUND" in err_str or "not found" in err_str.lower():
