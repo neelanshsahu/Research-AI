@@ -90,9 +90,8 @@ async def update_settings(request: SettingsRequest):
         os.environ["PROVIDER"] = request.provider
 
     if request.api_key is not None:
-        pass # Ignored: always use .env key as requested by user
-        # _runtime_settings["api_key"] = request.api_key
-        # os.environ["GEMINI_API_KEY"] = request.api_key
+        _runtime_settings["api_key"] = request.api_key
+        os.environ["GEMINI_API_KEY"] = request.api_key
 
     if request.model is not None:
         _runtime_settings["model"] = request.model
@@ -185,7 +184,7 @@ async def research_stream(task_id: str):
     """SSE endpoint — streams agent progress events to the frontend."""
     if task_id not in tasks:
         raise HTTPException(status_code=404, detail="Task not found.")
-    return EventSourceResponse(stream_research(task_id))
+    return EventSourceResponse(stream_research(task_id), headers={"X-Accel-Buffering": "no"})
 
 
 @app.post("/api/research/compare")
