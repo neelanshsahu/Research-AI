@@ -8,6 +8,8 @@ import {
 import { useResearch } from '../hooks/useResearch'
 import ComparePanel from './ComparePanel'
 
+const API_BASE_URL = import.meta.env.PROD ? "https://research-ai-uow9.onrender.com" : "";
+
 /* ─── Dimension Diff Row ─────────────────────────────────────────── */
 function DiffRow({ dimension, topicA, topicB, labelA, labelB }) {
   return (
